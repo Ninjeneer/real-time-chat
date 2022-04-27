@@ -1,13 +1,16 @@
-import Chat from './components/chat/chat.component';
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-function App() {
+import {Chat} from "./components/chat/chat.component";
+import {Login} from "./components/login/login";
+import React from 'react';
+
+export const App = (props: any) => {
   return (
-    <div className="App">
-      <Chat></Chat>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Login />}></Route>
+        <Route path="chat" element={<Chat />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
