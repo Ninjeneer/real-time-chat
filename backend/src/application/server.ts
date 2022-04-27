@@ -2,6 +2,7 @@ import fastify, { FastifyInstance } from "fastify";
 
 import MessageController from "./message.controller";
 import MessageService from "../domain/services/message.service";
+import fastifyCors from "fastify-cors";
 
 export default class Server {
     private readonly server: FastifyInstance;
@@ -9,6 +10,8 @@ export default class Server {
 
     constructor(messageService: MessageService) {
         this.server = fastify({ logger: true });
+        this.server.register(fastifyCors);
+        
         this.messageController = new MessageController(this.server, messageService);
     }
 

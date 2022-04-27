@@ -25,5 +25,10 @@ export default class MessageController {
                 });
             });
         });
+
+        this.fastifyInstance.get('/chat/history', async (req, res) => {
+            const messages = await this.messageService.getMessageHistory();
+            res.send(messages);
+        });
     }
 }
