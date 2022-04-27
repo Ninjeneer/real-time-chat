@@ -1,0 +1,24 @@
+.chat-container {
+    background-color: rgb(180, 180, 180);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-input {
+    margin-top: 15px;
+}
+
+.chat-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: rgb(240, 240, 240);
+    box-sizing: border-box;
+    resize: none;
+}
+
+.chat-content {
+    width: 100%;
+}
