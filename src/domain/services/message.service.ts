@@ -1,5 +1,6 @@
 import Message from "../entities/message";
 import { MessageRepository } from "../ports/message.repository";
+import { SendMessageDto } from "../dto/send-message.dto";
 
 export default class MessageService {
     private readonly messageRepository: MessageRepository;
@@ -8,7 +9,8 @@ export default class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public sendMessage(message: Message): Promise<Message> {
+    public sendMessage(messageDto: SendMessageDto): Promise<Message> {
+        const message = new Message(messageDto.text, messageDto.user);
         return this.messageRepository.save(message);
     }
 

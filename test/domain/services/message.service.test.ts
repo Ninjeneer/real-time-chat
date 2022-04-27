@@ -14,8 +14,9 @@ describe('MessageService', () => {
 
     it('should save a sent message', async () => {
         const message = new Message("message test", "Loan");
-        const sentMessage = await messageService.sendMessage(message);
-        expect(sentMessage).toBe(message);
+        const sentMessage = await messageService.sendMessage({ text: message.text, user: message.user });
+        expect(sentMessage.text).toEqual(message.text);
+        expect(sentMessage.user).toEqual(message.user);
     });
 
     it('should get all messages', async () => {

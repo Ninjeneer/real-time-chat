@@ -1,5 +1,5 @@
 export default class Message {
-    public id: string;
+    public id?: string;
     public text: string;
     public sentAt: Date;
     public user: string;
