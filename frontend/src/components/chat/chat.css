@@ -4,6 +4,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 400px;
+    height: 600px;
 }
 
 .chat-input {
@@ -21,4 +23,6 @@
 
 .chat-content {
     width: 100%;
+    height: 90%;
+    overflow-y: auto;
 }
