@@ -20,8 +20,9 @@ export default class MessageController {
                 const message = JSON.parse(data.toString()); 
                 console.log(data.toString()) 
                 const sentMessage = await this.messageService.sendMessage(new Message(message.text, message.user));
-                connection.socket.send(JSON.stringify(sentMessage));
-                this.fastifyInstance.websocketServer.emit('message', JSON.stringify(sentMessage));
+                this.fastifyInstance.websocketServer.clients.forEach(client => {
+                    client.send(JSON.stringify(sentMessage));
+                });
             });
         });
     }
