@@ -1,5 +1,5 @@
-import Message from "../../../src/domain/entities/message";
-import { MessageRepository } from "../../../src/domain/ports/message.repository";
+import Message from "../../../../src/domain/entities/message";
+import { MessageRepository } from "../../../../src/domain/ports/message.repository";
 
 export default class MessageRepositoryMock implements MessageRepository {
     private messages: Message[] = [];

@@ -1,7 +1,7 @@
-import Message from "../../../src/domain/entities/message";
-import { MessageRepository } from "../../../src/domain/ports/message.repository";
+import Message from "../../../../src/domain/entities/message";
+import { MessageRepository } from "../../../../src/domain/ports/message.repository";
 import MessageRepositoryMock from "./message.repository.mock";
-import MessageService from "../../../src/domain/services/message.service";
+import MessageService from "../../../../src/domain/services/message.service";
 
 describe('MessageService', () => {
     let messageRepository: MessageRepository;
