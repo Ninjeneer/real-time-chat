@@ -17,7 +17,7 @@ export default class Server {
         
         this.messageController = new MessageController(this.server, messageService);
         this.userController = new UserController(this.server, userService);
-    }
+   }
 
     public start(): void {
         this.messageController.initRoutes();

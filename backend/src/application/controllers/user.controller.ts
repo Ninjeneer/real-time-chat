@@ -1,5 +1,6 @@
+import fastify, { FastifyInstance } from "fastify";
+
 import { CreateUserDto } from "../../domain/dto/create-user.dto";
-import { FastifyInstance } from "fastify";
 import InvalidPassword from "../../domain/exceptions/invalid-password";
 import { LoginUserDto } from "../../domain/dto/login.dto";
 import UserAlreadyExist from "../../domain/exceptions/user-already-exist";
@@ -25,6 +26,7 @@ export default class UserController {
                     } else {
                         res.status(500).send("An error occurred");
                     }
+                    console.log(err)
                 });
         });
 
@@ -38,6 +40,7 @@ export default class UserController {
                     } else {
                         res.status(500).send("An error occurred");
                     }
+                    console.log(err)
                 });
         });
     }

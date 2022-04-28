@@ -1,12 +1,23 @@
 export default class User {
+    private id?: string;
     private username: string;
     private password: string;
     private token: string;
     private color: string; // hex color
 
-    constructor(username: string) {
+    constructor(username: string, password?: string, color?: string, id?: string) {
+        this.id = id;
         this.username = username;
-        this.color = this.generateColor();
+        this.password = password;
+        this.color = color ? color : this.generateColor();
+    }
+    
+    public setId(id: string): void {
+        this.id = id;
+    }
+
+    public getId(): string {
+        return this.id;
     }
 
     public getUsername(): string {
@@ -27,6 +38,10 @@ export default class User {
 
     public setToken(value): string {
         return this.token = value;
+    }
+
+    public getColor(): string {
+        return this.color;
     }
 
     private generateColor(): string {
