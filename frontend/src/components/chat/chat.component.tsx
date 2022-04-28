@@ -1,9 +1,12 @@
 import './chat.css'
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import HttpService from '../../services/http.service';
-import Message from "../message/message";
+import { Message } from "../message/message";
+import { Message as MessageEntity } from '../../entities/message';
+import React from 'react';
+import { User } from '../../entities/user';
 import WebSocketService from '../../services/websocket.service';
 
 type Props = {
@@ -13,29 +16,22 @@ type Props = {
 
 export const Chat = (props: Props) => {
     const scrollAnchor = useRef(null);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = React.useState<MessageEntity[]>([]);
 
     useEffect(() => {
         // Get the history chat
         props.httpService.getMessageHistory()
             .then((m) => setMessages(m))
-            .then(() => scrollToBottom())
-
-        props.chatWSService.getWebSocket().onopen = () => {
-            console.log('connected');
-        }
+            .then(() => scrollToBottom());
 
         // Listen for messages
         props.chatWSService.getWebSocket().onmessage = (event) => {
             // Parse the message
             const m = JSON.parse(event.data);
             // Add the message to the state
+            console.log(m)
             setMessages((messages) => [...messages, m]);
             scrollToBottom();
-        }
-
-        props.chatWSService.getWebSocket().onclose = () => {
-            console.log('disconnected');
         }
     }, [])
 
@@ -63,8 +59,8 @@ export const Chat = (props: Props) => {
         setTimeout(() => scrollAnchor.current?.scrollIntoView({ behavior: 'smooth' }), 100);
     }
 
-    const getLocalUser = (): string => {
-        return localStorage.getItem("user");
+    const getLocalUser = (): User => {
+        return JSON.parse(localStorage.getItem("user"));
     }
 
     return (

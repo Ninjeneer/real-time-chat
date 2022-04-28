@@ -1,4 +1,6 @@
+import User from "../entities/user";
+
 export type SendMessageDto = {
-    user: string;
+    user: User;
     text: string;
 }

@@ -30,7 +30,9 @@ export default class UserMongoRepository implements UserRepository {
                 token: user.getToken()
             }
         }, { upsert: true });
-        user.setId(result.upsertedId.toString());
+        if (result.upsertedId) {
+            user.setId(result.upsertedId.toString());
+        }
         return user;
     }
 

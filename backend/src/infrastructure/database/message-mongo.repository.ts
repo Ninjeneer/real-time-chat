@@ -12,7 +12,10 @@ export default class MessageMongoRepository implements MessageRepository {
     }
 
     public async save(message: Message): Promise<Message> {
-        await this.collection.insertOne(message);
+        await this.collection.insertOne({
+            text: message.text,
+            userId: message.user.getId()
+        });
         return message;
     }
     

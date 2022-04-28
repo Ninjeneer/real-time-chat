@@ -1,17 +1,15 @@
 import './message'
 
 import { Message as MessageEntity } from '../../entities/message'
-import React from "react";
 
 type Props = {
     message: MessageEntity;
 }
-export default class Message extends React.Component<Props, {}> {
-    render() {
-        return (
-            <div className="message">
-                <p><b>{this.props.message.user} :</b> {this.props.message.text}</p>
-            </div>
-        )
-    }
+
+export const Message = (props: Props) => {
+    return (
+        <div className="message">
+            <p><b style={{ 'color': props.message.user.color }}>{props.message.user.username} :</b> {props.message.text}</p>
+        </div>
+    )
 }
