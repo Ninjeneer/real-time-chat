@@ -1,6 +1,7 @@
 export default class User {
     private username: string;
     private password: string;
+    private token: string;
     private color: string; // hex color
 
     constructor(username: string) {
@@ -18,6 +19,14 @@ export default class User {
 
     public setPassword(password: string): void {
         this.password = password;
+    }
+
+    public getToken(): string {
+        return this.token;
+    }
+
+    public setToken(value): string {
+        return this.token = value;
     }
 
     private generateColor(): string {

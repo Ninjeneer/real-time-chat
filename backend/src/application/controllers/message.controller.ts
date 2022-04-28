@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import FastifyWebSocket from "fastify-websocket";
-import Message from "../domain/entities/message";
-import MessageService from "../domain/services/message.service";
+import Message from "../../domain/entities/message";
+import MessageService from "../../domain/services/message.service";
 
 export default class MessageController {
     private readonly messageService: MessageService;
