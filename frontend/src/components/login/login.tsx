@@ -3,9 +3,6 @@ import './login.css'
 import React from 'react';
 import { useNavigate } from "react-router-dom"
 
-type State = {
-  user: string;
-}
 export const Login = (props: any) => {
 
   const [user, setUser] = React.useState<string>("");
@@ -13,6 +10,9 @@ export const Login = (props: any) => {
 
   const validate = (): void => {
     if (user.trim() !== "") {
+      // Save the user in the localStorage
+      localStorage.setItem("user", user);
+      // Redirect to the chat
       navigate("/chat");
     }
   }

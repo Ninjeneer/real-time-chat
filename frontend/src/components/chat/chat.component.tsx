@@ -2,29 +2,31 @@ import './chat.css'
 
 import { useEffect, useRef, useState } from "react";
 
+import HttpService from '../../services/http.service';
 import Message from "../message/message";
+import WebSocketService from '../../services/websocket.service';
 
-const URL = 'ws://localhost:3000/chat';
+type Props = {
+    chatWSService: WebSocketService;
+    httpService: HttpService;
+}
 
-export const Chat = (props: any) => {
-    const ws = new WebSocket(URL);
-
+export const Chat = (props: Props) => {
     const scrollAnchor = useRef(null);
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         // Get the history chat
-        fetch('http://localhost:3000/chat/history')
-            .then((response) => response.json())
+        props.httpService.getMessageHistory()
             .then((m) => setMessages(m))
             .then(() => scrollToBottom())
 
-        ws.onopen = () => {
+        props.chatWSService.getWebSocket().onopen = () => {
             console.log('connected');
         }
 
         // Listen for messages
-        ws.onmessage = (event) => {
+        props.chatWSService.getWebSocket().onmessage = (event) => {
             // Parse the message
             const m = JSON.parse(event.data);
             // Add the message to the state
@@ -32,7 +34,7 @@ export const Chat = (props: any) => {
             scrollToBottom();
         }
 
-        ws.onclose = () => {
+        props.chatWSService.getWebSocket().onclose = () => {
             console.log('disconnected');
         }
     }, [])
@@ -51,7 +53,7 @@ export const Chat = (props: any) => {
             // Remove trailing \n
             message = message.substring(0, message.length - 1);
             // Send the message to the server
-            ws.send(JSON.stringify({ text: message, user: 'me' }));
+            props.chatWSService.getWebSocket().send(JSON.stringify({ text: message, user: getLocalUser() }));
             // Reset the input field
             messageInput.value = '';
         }
@@ -59,6 +61,10 @@ export const Chat = (props: any) => {
 
     const scrollToBottom = (): void => {
         setTimeout(() => scrollAnchor.current?.scrollIntoView({ behavior: 'smooth' }), 100);
+    }
+
+    const getLocalUser = (): string => {
+        return localStorage.getItem("user");
     }
 
     return (
