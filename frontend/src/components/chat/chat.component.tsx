@@ -28,7 +28,6 @@ export const Chat = (props: Props) => {
             // Parse the message
             const m = JSON.parse(event.data);
             // Add the message to the state
-            console.log(m)
             setMessages((messages) => [...messages, m]);
             scrollToBottom();
         }

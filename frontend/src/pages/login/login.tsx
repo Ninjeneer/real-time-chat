@@ -33,11 +33,6 @@ export const Login = (props: Props, state: State) => {
     }
   }
 
-  useEffect(() => {
-    console.log(props);
-    console.log(state);
-  }, [])
-
   return (
     <div className="container">
       <div className='vertical-form'>
