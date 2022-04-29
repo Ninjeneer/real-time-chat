@@ -64,16 +64,22 @@ export const Chat = (props: Props) => {
     }
 
     return (
-        <div className="chat-container">
-            <p>Welcome to the chat room !</p>
-            <div className="chat-content" id="chat-content">
-                {messages.map((message, index) => <Message key={index} message={message} />)}
-                <div ref={scrollAnchor}></div>
-            </div>
-            <div className="chat-input">
-                <textarea placeholder='Envoyer un message' rows={2} onKeyUp={handleKeyPress.bind(this)} id="message-input"></textarea>
+        <div className='container'>
+            <div className="chat-container">
+                <p>Welcome to the chat room !</p>
+                <div className="chat-content" id="chat-content">
+                    {messages.map((message, index) => <Message key={index} message={message} />)}
+                    <div ref={scrollAnchor}></div>
+                </div>
+                <div className="chat-input">
+                    <div className="input-with-smiley">
+                        <textarea placeholder='Envoyer un message' rows={2} onKeyUp={handleKeyPress.bind(this)} id="message-input"></textarea>
+                        <img src={require('./smiley.png')} alt='smiley' onClick={() => alert('Not yet :)')} />
+                    </div>
+                </div>
             </div>
         </div>
+
     )
 
 }
