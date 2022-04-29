@@ -4,6 +4,7 @@ import FastifyWebSocket from "fastify-websocket";
 import InvalidToken from "../../domain/exceptions/invalid-token";
 import Message from "../../domain/entities/message";
 import MessageService from "../../domain/services/message.service";
+import { removePassword } from "../middlewares/remove-password.middleware";
 
 export default class MessageController {
     private readonly messageService: MessageService;
@@ -24,13 +25,13 @@ export default class MessageController {
                 try {
                     const message = JSON.parse(data.toString()); 
                     const sentMessage = await this.messageService.sendMessage({ text: message.text, userId: message.userId });
+                    removePassword(sentMessage);
                     this.fastifyInstance.websocketServer.clients.forEach(client => {
                         client.send(JSON.stringify(sentMessage));
                     });
                 } catch (e) {
                     connection.socket.send("An error occurred");
-                }
-                
+                } 
             });
         });
 

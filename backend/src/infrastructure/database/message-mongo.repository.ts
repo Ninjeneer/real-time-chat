@@ -19,7 +19,7 @@ export default class MessageMongoRepository implements MessageRepository {
             text: sanitize(message.text),
             userId: sanitize(new ObjectId(message.user.getId()))
         });
-        
+
         const mdbMessage = await this.collection.aggregate([
             { $match: { _id: new ObjectId(insertion.insertedId) } },
             {
@@ -33,7 +33,7 @@ export default class MessageMongoRepository implements MessageRepository {
         ]).toArray();
         return new Message(mdbMessage[0].text, new User(mdbMessage[0].user[0].username, mdbMessage[0].user[0].password, mdbMessage[0].user[0].color, mdbMessage[0].user[0]._id.toString()));
     }
-    
+
     public async getAll(): Promise<Message[]> {
         const messages = await this.collection.aggregate([
             {
@@ -45,9 +45,11 @@ export default class MessageMongoRepository implements MessageRepository {
                 }
             }
         ]).toArray();
-        return (messages).map((message) => {
-            console.log(message);
-            return new Message(message.text, new User(message.user[0].username, message.user[0].password, message.user[0].color, message.user[0]._id.toString()))
-        });
+        return (messages).map((message) =>
+            new Message(
+                message.text,
+                new User(message.user[0].username, message.user[0].password, message.user[0].color, message.user[0]._id.toString())
+            )
+        );
     }
 }
