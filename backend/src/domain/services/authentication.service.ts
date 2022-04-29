@@ -3,7 +3,6 @@ import InvalidToken from "../exceptions/invalid-token";
 import { LoginUserDto } from "../dto/login.dto";
 import User from "../entities/user";
 import UserService from "../adapters/user.service";
-import UserServiceImpl from "./user.service";
 import bcrypt from "bcrypt";
 
 /*

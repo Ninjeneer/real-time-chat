@@ -1,6 +1,5 @@
 import { CreateUserDto } from "../../../src/domain/dto/create-user.dto";
 import MongoDatabase from "../../../src/infrastructure/database/mongo";
-import UserAlreadyExist from "../../../src/domain/exceptions/user-already-exist";
 import UserMongoRepository from "../../../src/infrastructure/database/user-mongo.repository";
 import UserRepository from "../../../src/domain/ports/user.repository";
 import UserService from "../../../src/domain/adapters/user.service";

@@ -1,7 +1,6 @@
-import fastify, { FastifyInstance } from "fastify";
-
 import AuthenticationService from "../../domain/services/authentication.service";
 import { CreateUserDto } from "../../domain/dto/create-user.dto";
+import { FastifyInstance } from "fastify";
 import InvalidPassword from "../../domain/exceptions/invalid-password";
 import { LoginUserDto } from "../../domain/dto/login.dto";
 import UserAlreadyExist from "../../domain/exceptions/user-already-exist";

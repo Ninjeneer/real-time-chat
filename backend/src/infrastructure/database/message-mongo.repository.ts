@@ -35,6 +35,7 @@ export default class MessageMongoRepository implements MessageRepository {
     }
 
     public async getAll(): Promise<Message[]> {
+        // For better performances, we could have use chunks of data instead of returning everything at once
         const messages = await this.collection.aggregate([
             {
                 $lookup: {

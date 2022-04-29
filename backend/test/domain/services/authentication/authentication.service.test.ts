@@ -1,7 +1,6 @@
 import AuthenticationService from "../../../../src/domain/services/authentication.service";
 import { CreateUserDto } from "../../../../src/domain/dto/create-user.dto";
 import InvalidPassword from "../../../../src/domain/exceptions/invalid-password";
-import UserAlreadyExist from "../../../../src/domain/exceptions/user-already-exist";
 import UserRepository from "../../../../src/domain/ports/user.repository";
 import UserRepositoryMock from "../user/user.repository.mock";
 import UserService from "../../../../src/domain/services/user.service";
@@ -31,14 +30,14 @@ describe('AuthenticationService', () => {
 
     it('should not login with valid username and invalid password', async () => {
         const request: CreateUserDto = { username: faker.internet.userName(), password: "123456" };
-        const savedUser = await userService.saveUser(request);
+        await userService.saveUser(request);
 
         expect(authenticationService.login({ username: request.username, password: "xxx" })).rejects.toBeInstanceOf(InvalidPassword);
     });
 
     it('should not login with invalid username and invalid password', async () => {
         const request: CreateUserDto = { username: faker.internet.userName(), password: "123456" };
-        const savedUser = await userService.saveUser(request);
+        await userService.saveUser(request);
 
         expect(authenticationService.login({ username: "xxx", password: "xxx" })).rejects.toBeInstanceOf(InvalidPassword);
     });

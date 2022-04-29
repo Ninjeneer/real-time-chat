@@ -5,7 +5,6 @@ import MessageController from "./controllers/message.controller";
 import MessageService from "../domain/services/message.service";
 import UserController from "./controllers/user.controller";
 import UserService from "../domain/adapters/user.service";
-import UserServiceImpl from "../domain/services/user.service";
 import fastifyCors from "fastify-cors";
 import { removePassword } from "./middleware/remove-password.middleware";
 

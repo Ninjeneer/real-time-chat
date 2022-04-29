@@ -8,6 +8,7 @@ import WebSocketService from "./services/websocket.service";
 
 export const App = (props: any) => {
 
+  // Dependency injection
   const httpService = new HttpService("http://localhost:3000");
   const chatWSService = new WebSocketService("ws://localhost:3000/chat");
 

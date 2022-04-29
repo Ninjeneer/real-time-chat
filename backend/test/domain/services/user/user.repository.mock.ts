@@ -1,5 +1,3 @@
-import Message from "../../../../src/domain/entities/message";
-import { MessageRepository } from "../../../../src/domain/ports/message.repository";
 import User from "../../../../src/domain/entities/user";
 import UserRepository from "../../../../src/domain/ports/user.repository";
 
