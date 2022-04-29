@@ -3,6 +3,7 @@ import { Collection, ObjectId } from "mongodb";
 import MongoDatabase from "./mongo";
 import User from "../../domain/entities/user";
 import UserRepository from "../../domain/ports/user.repository";
+import sanitize from "mongo-sanitize";
 
 export default class UserMongoRepository implements UserRepository {
 
@@ -22,12 +23,12 @@ export default class UserMongoRepository implements UserRepository {
         if (!user.getId()) {
             user.setId(new ObjectId().toString());
         }
-        const result = await this.collection.updateOne({ _id: new ObjectId(user.getId()) }, {
+        const result = await this.collection.updateOne({ _id: new ObjectId(sanitize(user.getId())) }, {
             $set: {
-                username: user.getUsername(),
-                password: user.getPassword(),
-                color: user.getColor(),
-                token: user.getToken()
+                username: sanitize(user.getUsername()),
+                password: sanitize(user.getPassword()),
+                color: sanitize(user.getColor()),
+                token: sanitize(user.getToken())
             }
         }, { upsert: true });
         if (result.upsertedId) {

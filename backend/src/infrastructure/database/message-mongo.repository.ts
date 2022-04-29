@@ -2,6 +2,7 @@ import { Collection } from "mongodb";
 import Message from "../../domain/entities/message";
 import { MessageRepository } from "../../domain/ports/message.repository";
 import MongoDatabase from "./mongo";
+import sanitize from "mongo-sanitize";
 
 export default class MessageMongoRepository implements MessageRepository {
     private collection?: Collection;
@@ -13,8 +14,8 @@ export default class MessageMongoRepository implements MessageRepository {
 
     public async save(message: Message): Promise<Message> {
         await this.collection.insertOne({
-            text: message.text,
-            userId: message.user.getId()
+            text: sanitize(message.text),
+            userId: sanitize(message.user.getId())
         });
         return message;
     }
