@@ -2,9 +2,8 @@ import AuthenticationService from "../../domain/services/authentication.service"
 import { FastifyInstance } from "fastify";
 import FastifyWebSocket from "fastify-websocket";
 import InvalidToken from "../../domain/exceptions/invalid-token";
-import Message from "../../domain/entities/message";
 import MessageService from "../../domain/services/message.service";
-import { removePassword } from "../middlewares/remove-password.middleware";
+import { removePassword } from "../middleware/remove-password.middleware";
 
 export default class MessageController {
     private readonly messageService: MessageService;
@@ -23,7 +22,7 @@ export default class MessageController {
         this.fastifyInstance.get('/chat', { websocket: true }, (connection, req) => {
             connection.on('data', async (data) => {
                 try {
-                    const message = JSON.parse(data.toString()); 
+                    const message = JSON.parse(data.toString());
                     const sentMessage = await this.messageService.sendMessage({ text: message.text, userId: message.userId });
                     removePassword(sentMessage);
                     this.fastifyInstance.websocketServer.clients.forEach(client => {
@@ -31,7 +30,7 @@ export default class MessageController {
                     });
                 } catch (e) {
                     connection.socket.send("An error occurred");
-                } 
+                }
             });
         });
 

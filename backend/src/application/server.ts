@@ -4,9 +4,10 @@ import AuthenticationService from "../domain/services/authentication.service";
 import MessageController from "./controllers/message.controller";
 import MessageService from "../domain/services/message.service";
 import UserController from "./controllers/user.controller";
-import UserService from "../domain/services/user.service";
+import UserService from "../domain/adapters/user.service";
+import UserServiceImpl from "../domain/services/user.service";
 import fastifyCors from "fastify-cors";
-import { removePassword } from "./middlewares/remove-password.middleware";
+import { removePassword } from "./middleware/remove-password.middleware";
 
 export default class Server {
     private readonly server: FastifyInstance;

@@ -5,6 +5,7 @@ import UserAlreadyExist from "../../../../src/domain/exceptions/user-already-exi
 import UserRepository from "../../../../src/domain/ports/user.repository";
 import UserRepositoryMock from "../user/user.repository.mock";
 import UserService from "../../../../src/domain/services/user.service";
+import UserServiceImpl from "../../../../src/domain/services/user.service";
 import faker from "faker";
 
 describe('AuthenticationService', () => {
@@ -14,7 +15,7 @@ describe('AuthenticationService', () => {
 
     beforeEach(() => {
         userRepository = new UserRepositoryMock();
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl(userRepository);
         authenticationService = new AuthenticationService(userService);
     });
 

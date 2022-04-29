@@ -5,7 +5,7 @@ import { CreateUserDto } from "../../domain/dto/create-user.dto";
 import InvalidPassword from "../../domain/exceptions/invalid-password";
 import { LoginUserDto } from "../../domain/dto/login.dto";
 import UserAlreadyExist from "../../domain/exceptions/user-already-exist";
-import UserService from "../../domain/services/user.service";
+import UserService from "../../domain/adapters/user.service";
 
 export default class UserController {
     private readonly fastifyInstance: FastifyInstance;

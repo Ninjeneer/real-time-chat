@@ -1,4 +1,4 @@
-import { removePassword } from "../../src/application/middlewares/remove-password.middleware";
+import { removePassword } from "../../src/application/middleware/remove-password.middleware";
 
 describe("RemovePasswordMiddleware", () => {
     it("Should remove password from object", () => {

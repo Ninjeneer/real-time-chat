@@ -2,7 +2,8 @@ import { CreateUserDto } from "../../../../src/domain/dto/create-user.dto";
 import UserAlreadyExist from "../../../../src/domain/exceptions/user-already-exist";
 import UserRepository from "../../../../src/domain/ports/user.repository";
 import UserRepositoryMock from "./user.repository.mock";
-import UserService from "../../../../src/domain/services/user.service";
+import UserService from "../../../../src/domain/adapters/user.service";
+import UserServiceImpl from "../../../../src/domain/services/user.service";
 import faker from "faker";
 
 describe('UserService', () => {
@@ -11,7 +12,7 @@ describe('UserService', () => {
 
     beforeEach(() => {
         userRepository = new UserRepositoryMock();
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl(userRepository);
     });
 
     it('should save a user', async () => {

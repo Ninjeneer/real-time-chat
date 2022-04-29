@@ -3,7 +3,8 @@ import MongoDatabase from "../../../src/infrastructure/database/mongo";
 import UserAlreadyExist from "../../../src/domain/exceptions/user-already-exist";
 import UserMongoRepository from "../../../src/infrastructure/database/user-mongo.repository";
 import UserRepository from "../../../src/domain/ports/user.repository";
-import UserService from "../../../src/domain/services/user.service";
+import UserService from "../../../src/domain/adapters/user.service";
+import UserServiceImpl from "../../../src/domain/services/user.service";
 import dotenv from "dotenv"
 import faker from "faker";
 
@@ -23,7 +24,7 @@ describe('UserService', () => {
 
     beforeEach(async () => {
         userRepository = new UserMongoRepository();
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl(userRepository);
     });
 
     it('should save a user', async () => {

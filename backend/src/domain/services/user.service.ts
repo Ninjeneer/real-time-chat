@@ -2,9 +2,10 @@ import { CreateUserDto } from "../dto/create-user.dto";
 import User from "../entities/user";
 import UserAlreadyExist from "../exceptions/user-already-exist";
 import UserRepository from "../ports/user.repository";
+import UserService from "../adapters/user.service";
 import bcrypt from "bcrypt";
 
-export default class UserService {
+export default class UserServiceImpl implements UserService {
     private readonly userRepository: UserRepository;
 
     constructor(userRepository: UserRepository) {

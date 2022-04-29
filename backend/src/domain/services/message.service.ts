@@ -1,10 +1,11 @@
 import Message from "../entities/message";
 import { MessageRepository } from "../ports/message.repository";
+import MessageService from "../adapters/message.service";
 import { SendMessageDto } from "../dto/send-message.dto";
 import UserDoesNotExist from "../exceptions/user-does-not-exist";
-import UserService from "./user.service";
+import UserService from "../adapters/user.service";
 
-export default class MessageService {
+export default class MessageServiceImpl implements MessageService {
     private readonly messageRepository: MessageRepository;
     private readonly userService: UserService;
 
@@ -14,7 +15,6 @@ export default class MessageService {
     }
 
     public async sendMessage(messageDto: SendMessageDto): Promise<Message> {
-        console.log(messageDto);
         const user = await this.userService.getUserById(messageDto.userId);
         if (!user) {
             throw new UserDoesNotExist();

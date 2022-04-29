@@ -2,10 +2,11 @@ import Message from "../../../../src/domain/entities/message";
 import { MessageRepository } from "../../../../src/domain/ports/message.repository";
 import MessageRepositoryMock from "./message.repository.mock";
 import MessageService from "../../../../src/domain/services/message.service";
-import User from "../../../../src/domain/entities/user";
+import MessageServiceImpl from "../../../../src/domain/services/message.service";
 import UserRepository from "../../../../src/domain/ports/user.repository";
 import UserRepositoryMock from "../user/user.repository.mock";
-import UserService from "../../../../src/domain/services/user.service";
+import UserService from "../../../../src/domain/adapters/user.service";
+import UserServiceImpl from "../../../../src/domain/services/user.service";
 import faker from "faker";
 
 describe('MessageService', () => {
@@ -18,10 +19,10 @@ describe('MessageService', () => {
 
     beforeEach(() => {
         userRepository = new UserRepositoryMock();
-        userService = new UserService(userRepository);
+        userService = new UserServiceImpl(userRepository);
 
         messageRepository = new MessageRepositoryMock();
-        messageService = new MessageService(messageRepository, userService);
+        messageService = new MessageServiceImpl(messageRepository, userService);
     });
 
     it('should save a sent message', async () => {
