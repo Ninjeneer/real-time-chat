@@ -2,7 +2,7 @@ import './register.css'
 
 import { Link, useNavigate } from "react-router-dom";
 
-import HttpService from "../../../services/http.service"
+import HttpService from "../../services/http.service"
 import { useState } from "react";
 
 type Props = {
@@ -20,7 +20,7 @@ export const Register = (props: Props) => {
             const registerResponse = await props.httpService.register(username, password);
             if (registerResponse.status === 201) {
                 localStorage.setItem("user", JSON.stringify(registerResponse.json()));
-                navigate("/", { state: { registered: true } });
+                navigate("/login", { state: { registered: true } });
             } else {
                 alert(await registerResponse.text());
             }

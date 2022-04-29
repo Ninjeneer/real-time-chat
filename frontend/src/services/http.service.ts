@@ -28,9 +28,10 @@ export default class HttpService {
     }
 
     private buildHeaders(): HeadersInit {
+        const user = localStorage.getItem('user');
         return {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+            'Authorization': user ? `Bearer ${JSON.parse(user).token}` : null
         }
     }
 }

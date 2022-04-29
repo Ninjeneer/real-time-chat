@@ -3,7 +3,7 @@ import './login.css'
 import { Link, useNavigate } from "react-router-dom"
 import React, { useEffect, useState } from 'react';
 
-import HttpService from '../../../services/http.service';
+import HttpService from '../../services/http.service';
 
 type Props = {
   httpService: HttpService;
@@ -25,7 +25,7 @@ export const Login = (props: Props, state: State) => {
         if (response.status === 200) {
           const user = await response.json();
           localStorage.setItem("user", JSON.stringify(user));
-          navigate("/chat");
+          navigate("/");
         } else {
           alert(await response.text());
         }

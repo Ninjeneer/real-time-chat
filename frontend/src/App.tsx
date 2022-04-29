@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-import {Chat} from "./components/chat/chat.component";
+import { Home } from "./pages/home/home";
 import HttpService from "./services/http.service";
-import {Login} from "./components/auth/login/login";
-import { Register } from "./components/auth/register/register";
+import { Login } from "./pages/login/login";
+import { Register } from "./pages/register/register";
 import WebSocketService from "./services/websocket.service";
 
 export const App = (props: any) => {
@@ -14,8 +14,8 @@ export const App = (props: any) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Login httpService={httpService} />}></Route>
-        <Route path="chat" element={<Chat chatWSService={chatWSService} httpService={httpService} />}></Route>
+        <Route index element={<Home chatWSService={chatWSService} httpService={httpService} />}></Route>
+        <Route path="login" element={<Login httpService={httpService} />}></Route>
         <Route path="register" element={<Register httpService={httpService} />}></Route>
       </Routes>
     </BrowserRouter>
