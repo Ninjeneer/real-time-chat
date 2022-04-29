@@ -12,11 +12,11 @@ dotenv.config();
 
 // Only start the server if the database is connected
 MongoDatabase.getInstance().then(() => {
-    const messageRepository = new MessageMongoRepository();
-    const messageService = new MessageService(messageRepository);
-
     const userRepository = new UserMongoRepository();
     const userService = new UserService(userRepository);
+
+    const messageRepository = new MessageMongoRepository();
+    const messageService = new MessageService(messageRepository, userService);
 
     const authenticationService = new AuthenticationService(userService);
 

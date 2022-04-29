@@ -5,6 +5,13 @@ import User from "../entities/user";
 import UserService from "./user.service";
 import bcrypt from "bcrypt";
 
+/*
+ * The authentication service is responsible for authenticating users.
+ * It is also responsible for generating tokens for users.
+ * 
+ * The authentication is done by hand here, because of the constraint "the fewer libraries, the better"
+ * We could have use the passport library, which provides a lot of functionality for further extensions.
+*/
 export default class AuthenticationService {
     private readonly userService: UserService;
 

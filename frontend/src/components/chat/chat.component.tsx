@@ -45,11 +45,11 @@ export const Chat = (props: Props) => {
     const sendMessage = (): void => {
         const messageInput = document.getElementById('message-input') as HTMLInputElement;
         let message = messageInput.value;
-        if (message.length > 0) {
+        if (message.trim().length > 0) {
             // Remove trailing \n
             message = message.substring(0, message.length - 1);
             // Send the message to the server
-            props.chatWSService.getWebSocket().send(JSON.stringify({ text: message, user: getLocalUser() }));
+            props.chatWSService.getWebSocket().send(JSON.stringify({ text: message, userId: getLocalUser().id }));
             // Reset the input field
             messageInput.value = '';
         }

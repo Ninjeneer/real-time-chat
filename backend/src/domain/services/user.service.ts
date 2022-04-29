@@ -34,6 +34,10 @@ export default class UserService {
         return await this.userRepository.getUserByToken(token);
     }
 
+    public async getUserById(id: string): Promise<User> {
+        return await this.userRepository.getUserById(id);
+    }
+
     private hashPassword(password: string): string {
         return bcrypt.hashSync(password, 10);
     }

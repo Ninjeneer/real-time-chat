@@ -20,16 +20,17 @@ export default class MessageController {
 
     public initRoutes(): void {
         this.fastifyInstance.get('/chat', { websocket: true }, (connection, req) => {
-
-            console.log(req);
-
             connection.on('data', async (data) => {
-                const message = JSON.parse(data.toString()); 
-                console.log(data.toString()) 
-                const sentMessage = await this.messageService.sendMessage(new Message(message.text, message.user));
-                this.fastifyInstance.websocketServer.clients.forEach(client => {
-                    client.send(JSON.stringify(sentMessage));
-                });
+                try {
+                    const message = JSON.parse(data.toString()); 
+                    const sentMessage = await this.messageService.sendMessage({ text: message.text, userId: message.userId });
+                    this.fastifyInstance.websocketServer.clients.forEach(client => {
+                        client.send(JSON.stringify(sentMessage));
+                    });
+                } catch (e) {
+                    connection.socket.send("An error occurred");
+                }
+                
             });
         });
 
@@ -46,6 +47,7 @@ export default class MessageController {
                 } else {
                     res.status(500).send("An error occurred");
                 }
+                console.log(e)
             }
         });
     }

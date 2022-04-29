@@ -15,10 +15,10 @@ export default class Server {
     constructor(messageService: MessageService, userService: UserService, authenticationService: AuthenticationService) {
         this.server = fastify({ logger: true });
         this.server.register(fastifyCors);
-        
+
         this.messageController = new MessageController(this.server, messageService, authenticationService);
         this.userController = new UserController(this.server, userService, authenticationService);
-   }
+    }
 
     public start(): void {
         this.messageController.initRoutes();

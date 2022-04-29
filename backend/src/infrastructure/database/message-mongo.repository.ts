@@ -1,7 +1,9 @@
-import { Collection } from "mongodb";
+import { Collection, ObjectId } from "mongodb";
+
 import Message from "../../domain/entities/message";
 import { MessageRepository } from "../../domain/ports/message.repository";
 import MongoDatabase from "./mongo";
+import User from "../../domain/entities/user";
 import sanitize from "mongo-sanitize";
 
 export default class MessageMongoRepository implements MessageRepository {
@@ -13,15 +15,39 @@ export default class MessageMongoRepository implements MessageRepository {
     }
 
     public async save(message: Message): Promise<Message> {
-        await this.collection.insertOne({
+        const insertion = await this.collection.insertOne({
             text: sanitize(message.text),
-            userId: sanitize(message.user.getId())
+            userId: sanitize(new ObjectId(message.user.getId()))
         });
-        return message;
+        
+        const mdbMessage = await this.collection.aggregate([
+            { $match: { _id: new ObjectId(insertion.insertedId) } },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            }
+        ]).toArray();
+        return new Message(mdbMessage[0].text, new User(mdbMessage[0].user[0].username, mdbMessage[0].user[0].password, mdbMessage[0].user[0].color, mdbMessage[0].user[0]._id.toString()));
     }
     
     public async getAll(): Promise<Message[]> {
-        const messages = await this.collection.find().toArray();
-        return (await this.collection.find().toArray()).map((message) => new Message(message.text, message.user));
+        const messages = await this.collection.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            }
+        ]).toArray();
+        return (messages).map((message) => {
+            console.log(message);
+            return new Message(message.text, new User(message.user[0].username, message.user[0].password, message.user[0].color, message.user[0]._id.toString()))
+        });
     }
 }

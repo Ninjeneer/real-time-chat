@@ -8,7 +8,7 @@ export default class HttpService {
     }
 
     public async getMessageHistory(): Promise<Message[]> {
-        return await fetch(`${this.url}/chat/history`).then((response) => response.json())
+        return await fetch(`${this.url}/chat/history`, { headers: this.buildHeaders() }).then((response) => response.json())
     }
 
     public register(username: string, password: string): Promise<Response> {
@@ -29,7 +29,8 @@ export default class HttpService {
 
     private buildHeaders(): HeadersInit {
         return {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
         }
     }
 }
