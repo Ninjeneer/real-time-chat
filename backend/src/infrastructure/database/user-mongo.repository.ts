@@ -14,6 +14,14 @@ export default class UserMongoRepository implements UserRepository {
         database.then((db) => this.collection = db.collection("users"));
     }
 
+    public async getUserByToken(token: string): Promise<User> {
+        const user = await this.collection.findOne({ token });
+        if (user) {
+            return new User(user.get, user.password, user.color, user._id.toString());
+        }
+        return null;
+    }
+
     /**
      * Insert or update a user
      * @param user user to insert/update

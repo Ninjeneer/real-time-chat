@@ -14,4 +14,8 @@ export default class UserRepositoryMock implements UserRepository {
     public getUserByUsername(username: string): Promise<User> {
         return Promise.resolve(this.users.find(u => u.getUsername() === username));
     }
+
+    public getUserByToken(token: string): Promise<User> {
+        return Promise.resolve(this.users.find(u => u.getToken() === token));
+    }
 }

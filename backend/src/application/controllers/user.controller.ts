@@ -1,5 +1,6 @@
 import fastify, { FastifyInstance } from "fastify";
 
+import AuthenticationService from "../../domain/services/authentication.service";
 import { CreateUserDto } from "../../domain/dto/create-user.dto";
 import InvalidPassword from "../../domain/exceptions/invalid-password";
 import { LoginUserDto } from "../../domain/dto/login.dto";
@@ -9,10 +10,12 @@ import UserService from "../../domain/services/user.service";
 export default class UserController {
     private readonly fastifyInstance: FastifyInstance;
     private readonly userService: UserService;
+    private readonly authenticationService: AuthenticationService;
 
-    constructor(fastifyInstance: FastifyInstance, userService: UserService) {
+    constructor(fastifyInstance: FastifyInstance, userService: UserService, authenticationService: AuthenticationService) {
         this.fastifyInstance = fastifyInstance;
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     public initRoutes(): void {
@@ -32,7 +35,7 @@ export default class UserController {
 
         this.fastifyInstance.post("/auth/login", (req, res) => {
             const payload = req.body as LoginUserDto;
-            this.userService.login({ username: payload.username, password: payload.password })
+            this.authenticationService.login({ username: payload.username, password: payload.password })
                 .then((user) => res.send(user))
                 .catch((err) => {
                     if (err instanceof InvalidPassword) {

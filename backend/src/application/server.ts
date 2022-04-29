@@ -1,5 +1,6 @@
 import fastify, { FastifyInstance } from "fastify";
 
+import AuthenticationService from "../domain/services/authentication.service";
 import MessageController from "./controllers/message.controller";
 import MessageService from "../domain/services/message.service";
 import UserController from "./controllers/user.controller";
@@ -11,12 +12,12 @@ export default class Server {
     private readonly messageController: MessageController;
     private readonly userController: UserController;
 
-    constructor(messageService: MessageService, userService: UserService) {
+    constructor(messageService: MessageService, userService: UserService, authenticationService: AuthenticationService) {
         this.server = fastify({ logger: true });
         this.server.register(fastifyCors);
         
-        this.messageController = new MessageController(this.server, messageService);
-        this.userController = new UserController(this.server, userService);
+        this.messageController = new MessageController(this.server, messageService, authenticationService);
+        this.userController = new UserController(this.server, userService, authenticationService);
    }
 
     public start(): void {

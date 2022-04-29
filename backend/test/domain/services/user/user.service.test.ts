@@ -1,5 +1,4 @@
 import { CreateUserDto } from "../../../../src/domain/dto/create-user.dto";
-import InvalidPassword from "../../../../src/domain/exceptions/invalid-password";
 import UserAlreadyExist from "../../../../src/domain/exceptions/user-already-exist";
 import UserRepository from "../../../../src/domain/ports/user.repository";
 import UserRepositoryMock from "./user.repository.mock";
@@ -38,29 +37,5 @@ describe('UserService', () => {
     it('should not find an unexisting user by username', async () => {
         const user = await userService.getUserByUsername("xxx");
         expect(user).not.toBeDefined();
-    });
-
-    it('should login', async () => {
-        const request: CreateUserDto = { username: faker.internet.userName(), password: "123456" };
-        const savedUser = await userService.saveUser(request);
-
-        const loggedUser = await userService.login({ username: request.username, password: request.password });
-        expect(loggedUser).toBeDefined();
-        expect(loggedUser.getUsername()).toEqual(savedUser.getUsername());
-        expect(loggedUser.getToken()).toBeDefined();
-    });
-
-    it('should not login with valid username and invalid password', async () => {
-        const request: CreateUserDto = { username: faker.internet.userName(), password: "123456" };
-        const savedUser = await userService.saveUser(request);
-
-        expect(userService.login({ username: request.username, password: "xxx" })).rejects.toBeInstanceOf(InvalidPassword);
-    });
-
-    it('should not login with invalid username and invalid password', async () => {
-        const request: CreateUserDto = { username: faker.internet.userName(), password: "123456" };
-        const savedUser = await userService.saveUser(request);
-
-        expect(userService.login({ username: "xxx", password: "xxx" })).rejects.toBeInstanceOf(InvalidPassword);
     });
 });
